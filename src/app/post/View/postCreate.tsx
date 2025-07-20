@@ -40,7 +40,7 @@ export default function PostCreate({input}: InputCreate) {
           padding: '8px 16px',
           borderTop: '1px solid #eee',
           position: 'fixed',
-          bottom: 56,
+          bottom: 65,
           left: 0,
           right: 0,
           backgroundColor: 'white',
