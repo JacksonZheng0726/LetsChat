@@ -3,18 +3,21 @@ import { Box, Typography, Avatar, IconButton } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import type { member } from '../../../friend';
 import { sendRequest } from '../../potentialFriend/actions';
-import { useAppContext } from '../../AppContext';
 
 interface MemberItemProps {
   member: member;
+  friendUpdate: () => void;
 }
 
-export default function PotentialFriendItem({ member }: MemberItemProps) {
-  const { potentialFriendLoad} = useAppContext();
+export default function PotentialFriendItem({ member, friendUpdate }: MemberItemProps) {
 
   const handleAddFriend = async () => {
-    await sendRequest(member.id);
-    potentialFriendLoad();
+    try {
+      await sendRequest(member.id);
+      friendUpdate();
+    } catch (error) {
+      console.error('Failed to send friend request', error);
+    }
   };
 
   return (
@@ -41,3 +44,4 @@ export default function PotentialFriendItem({ member }: MemberItemProps) {
     </Box>
   );
 }
+

@@ -12,13 +12,10 @@
 import type { NextPage } from 'next'
 
 import MemberView from './View'
-import { AppProvider } from '../AppContext';
 
 const Page: NextPage = () => {
   return (
-    <AppProvider>
-      <MemberView />
-    </AppProvider>
+    <MemberView />
   )
 }
 

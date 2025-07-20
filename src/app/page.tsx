@@ -10,13 +10,12 @@
 */
 
 import type { NextPage } from 'next'
-import { AppProvider } from './AppContext';
-import PostsView from '../app/post/View'
+import PostsView from './post/View'
 
 const Page: NextPage = () => {
-  return <AppProvider>
+  return (
     <PostsView />
-  </AppProvider>;
+  )
 }
 
 export default Page

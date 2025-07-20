@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PotentialFriendItem from './potentialFriend';
-import { Box, CircularProgress } from '@mui/material';
-import { useAppContext } from '../../AppContext';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { member } from '@/friend';
+import { getPotentialFriend } from '../actions';
 
 export default function PotentialFriendsList() {
-  const { potentialFriend } = useAppContext();
-  
-  if (potentialFriend === null) {
+  const [potentialFriends, setPotentialFriends] = useState<member[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadPotentialFriends = async () => {
+    try {
+      const result = await getPotentialFriend();
+      setPotentialFriends(result || []);
+    } catch (err) {
+      setError('Failed to load potential friends');
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    loadPotentialFriends();
+  }, []);
+
+  if (error) {
+    return (
+      <Typography color="error" sx={{ p: 2 }}>
+        {error}
+      </Typography>
+    );
+  }
+
+  if (potentialFriends === null) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
         <CircularProgress />
@@ -27,8 +51,8 @@ export default function PotentialFriendsList() {
       paddingBottom: '112px',
       marginTop: 0
     }}>
-      {potentialFriend.map((member) => (
-        <PotentialFriendItem key={member.id} member={member} />
+      {potentialFriends.map((friend) => (
+        <PotentialFriendItem key={friend.id} member={friend} friendUpdate={loadPotentialFriends} />
       ))}
     </Box>
   );

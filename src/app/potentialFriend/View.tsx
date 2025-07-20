@@ -5,7 +5,6 @@ import Navigation from './viewComponent/NavigationView';
 // import CreatePostInput from './View/postCreate';
 import FriendList from '../potentialFriend/viewComponent/friendList';
 import FriendHeader from './viewComponent/header';
-// import { usePostContext } from '../AppContext';
 // import { createPost } from '../../app/post/actions';
 import {Box} from '@mui/material';
 
