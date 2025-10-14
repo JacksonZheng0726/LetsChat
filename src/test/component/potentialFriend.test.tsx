@@ -7,7 +7,7 @@ vi.mock('../../app/potentialFriend/actions', () => ({
   sendRequest: vi.fn()
 }));
 import PfriendView from '../../app/potentialFriend/View';
-import { AppProvider } from '../../app/AppContext';
+// import { AppProvider } from '../../app/AppContext';
 import * as PfriendActions from '../../app/potentialFriend/actions';
 import type { member } from '../../friend/index'
 
@@ -33,9 +33,7 @@ afterEach(() => {
 it('nothing appear when potnential friends not exist', async () => {
   vi.mocked(PfriendActions.getPotentialFriend).mockResolvedValue([]);
   render(
-    <AppProvider>
       <PfriendView />
-    </AppProvider>
   );
   // await waitFor(() => {
   //   expect(screen.getByText('No posts yet!')).toBeDefined();
@@ -51,9 +49,7 @@ it('list of potential friends display when available', async () => {
   vi.mocked(PfriendActions.getPotentialFriend).mockResolvedValue(mockfriend);
   
   render(
-    <AppProvider>
       <PfriendView />
-    </AppProvider>
   );
   await waitFor(() => {
     expect(screen.getAllByLabelText('potentialFriend')).toHaveLength(2);
@@ -65,9 +61,7 @@ it('click send request to member', async () => {
   vi.mocked(PfriendActions.getPotentialFriend).mockResolvedValue(friends)
 
   render(
-    <AppProvider>
       <PfriendView />
-    </AppProvider>
   )
   const send = await screen.findByLabelText('SendRequest')
   await userEvent.click(send)

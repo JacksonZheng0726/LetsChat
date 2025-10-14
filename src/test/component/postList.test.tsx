@@ -2,9 +2,10 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import { it, expect, vi} from 'vitest'
 import PostsList from '../../app/post/View/listPost'
-import { AppProvider } from '../../app/AppContext'
+// import { AppProvider } from '../../app/AppContext'
 import * as postActions from '../../app/post/actions'
 import type { Post } from '../../post'
+// import { mock } from 'node:test'
 
 vi.mock('../../app/post/actions', () => ({
   getPost: vi.fn(),
@@ -18,9 +19,7 @@ it('renders a list of posts from context', async () => {
   ]
   vi.mocked(postActions.getPost).mockResolvedValue(mockPosts)
   render(
-    <AppProvider>
-      <PostsList />
-    </AppProvider>
+      <PostsList posts={mockPosts} />
   )
   await waitFor(() => {
     const items = screen.getAllByLabelText('singlePost')

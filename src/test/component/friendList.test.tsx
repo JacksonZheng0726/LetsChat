@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import { it, expect, vi} from 'vitest'
 import FriendList from '../../app/potentialFriend/viewComponent/friendList'
-import { AppProvider } from '../../app/AppContext'
+// import { AppProvider } from '../../app/AppContext'
 import * as friendActions from '../../app/potentialFriend/actions'
 import type { member } from '../../friend/index'
 
@@ -23,9 +23,9 @@ it('renders a list of potential friends', async () => {
   ]
   vi.mocked(friendActions.getPotentialFriend).mockResolvedValue(mockfriend)
   render(
-    <AppProvider>
+    // <AppProvider>
       <FriendList />
-    </AppProvider>
+    /* </AppProvider> */
   )
   await waitFor(() => {
     const items = screen.getAllByLabelText('potentialFriend')

@@ -3,7 +3,7 @@ import { render, screen, waitFor, cleanup} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, it, expect, beforeEach, afterEach} from 'vitest';
 import PostsView from '../../app/post/View';
-import { AppProvider } from '../../app/AppContext';
+// import { AppProvider } from '../../app/AppContext';
 import * as postActions from '../../app/post/actions';
 
 vi.mock('../../app/post/actions', () => ({
@@ -34,9 +34,9 @@ afterEach(() => {
 it('empty array shown when no posts', async () => {
   vi.mocked(postActions.getPost).mockResolvedValue([]);
   render(
-    <AppProvider>
+    // <AppProvider>
       <PostsView />
-    </AppProvider>
+    /* </AppProvider> */
   );
   await waitFor(() => {
     expect(screen.getByText('No posts yet!')).toBeDefined();
@@ -52,9 +52,7 @@ it('posts display when available', async () => {
   vi.mocked(postActions.getPost).mockResolvedValue(mockPosts);
   
   render(
-    <AppProvider>
       <PostsView />
-    </AppProvider>
   );
   await waitFor(() => {
     expect(screen.getAllByLabelText('singlePost')).toHaveLength(2);
@@ -63,9 +61,7 @@ it('posts display when available', async () => {
 
 it('postCreation and the getPost will trigger', async () => {
   render(
-    <AppProvider>
       <PostsView />
-    </AppProvider>
   );
   const input = screen.getByPlaceholderText("What's on your mind?");
   await userEvent.type(input, 'I love today');
@@ -78,9 +74,7 @@ it('postCreation and the getPost will trigger', async () => {
 
 it('postCreation and the getPost will trigger with the image', async () => {
   render(
-    <AppProvider>
       <PostsView />
-    </AppProvider>
   );
   const input = screen.getByPlaceholderText("What's on your mind?");
   await userEvent.type(input, 'I love today');
