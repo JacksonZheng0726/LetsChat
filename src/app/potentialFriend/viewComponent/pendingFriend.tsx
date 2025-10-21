@@ -14,6 +14,7 @@ export default function PendingFriendItem({ member, friendUpdate }: MemberItemPr
     try {
       await acceptReq(member.id);
       friendUpdate();
+      window.dispatchEvent(new Event('refreshFriendsList'));
     } catch (error) {
       console.error('Failed to send friend request', error);
     }

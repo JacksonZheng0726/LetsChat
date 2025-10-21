@@ -1,23 +1,23 @@
 import React from 'react';
-import { Box, Typography, Avatar, IconButton} from '@mui/material';
+import { Box, Typography, Avatar} from '@mui/material';
 import type { member } from '../../../friend';
-import { getallFriend } from '../../potentialFriend/actions';
-import PendingIcon from '@mui/icons-material/Pending';
+// import { getallFriend } from '../../potentialFriend/actions';
+// import PendingIcon from '@mui/icons-material/Pending';
 interface MemberItemProps {
   member: member;
-  friendUpdate: () => void;
+  // friendUpdate: () => void;
 }
 
-export default function FriendItem({ member, friendUpdate }: MemberItemProps) {
+export default function FriendItem({ member}: MemberItemProps) {
 
-  const handleFriend = async () => {
-    try {
-      await getallFriend();
-      friendUpdate();
-    } catch (error) {
-      console.error('Failed to send friend request', error);
-    }
-  };
+  // const handleFriend = async () => {
+  //   try {
+  //     await getallFriend();
+  //     friendUpdate();
+  //   } catch (error) {
+  //     console.error('Failed to send friend request', error);
+  //   }
+  // };
 
   return (
     <Box
