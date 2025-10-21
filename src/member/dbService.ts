@@ -23,6 +23,8 @@ export class dbServ {
   }
 
   public async friendRequestCreate(idRequestMem: string, idReceiveMem: string) {
+    console.log('Request from:', idRequestMem);
+    console.log('Request to:', idReceiveMem);
     const select =
     `select *
     from friend AS F

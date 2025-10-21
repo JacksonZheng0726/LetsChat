@@ -68,6 +68,15 @@ VALUES (
     'posted', NOW()
   )
 );
+INSERT INTO friend(memberOne, memberTwo, data) 
+VALUES (
+  (SELECT id FROM member WHERE data->>'email' = 'molly@books.com'),
+  (SELECT id FROM member WHERE data->>'email' = 'nick@books.com'),
+  jsonb_build_object(
+    'requestStatus', 'waiting',
+    'posted', NOW()
+  )
+);
 
 INSERT INTO post(member, data)
 VALUES (
@@ -99,7 +108,8 @@ VALUES (
   )
 );
 
+-- SELECT id, data FROM member WHERE id = '18fcf031-10cb-4a7f-8300-55f05e181c35';
+-- -- SELECT data->>'name' as name FROM member WHERE id = '61aade26-a032-4546-b6fa-ef52cb38f9c0';
 
--- SELECT data->>'name' as name FROM member WHERE id = '61aade26-a032-4546-b6fa-ef52cb38f9c0';
-
--- SELECT id, data->>'name' as name, data->>'email' as email FROM member;
+-- -- SELECT id, data->>'name' as name, data->>'email' as email FROM member;
+-- Select id, data ->> 'requestStatus' as status FROM friend where data ->> 'requestStatus' = 'waiting'

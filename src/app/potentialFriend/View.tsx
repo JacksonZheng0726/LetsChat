@@ -3,10 +3,12 @@
 import React from 'react';
 import Navigation from './viewComponent/NavigationView';
 // import CreatePostInput from './View/postCreate';
-import FriendList from '../potentialFriend/viewComponent/friendList';
+import PotentialFriendList from './viewComponent/PotentialfriendList';
 import FriendHeader from './viewComponent/header';
 // import { createPost } from '../../app/post/actions';
 import {Box} from '@mui/material';
+import PendingFriendList from './viewComponent/pendingfriendList';
+import FriendLists from './viewComponent/friendList';
 
 
 export default function MemberView() {
@@ -27,7 +29,9 @@ export default function MemberView() {
       }}
     >
       <FriendHeader />
-      <FriendList />
+      <PotentialFriendList />
+      <PendingFriendList />
+      <FriendLists />
       <Navigation />
     </Box>
   );

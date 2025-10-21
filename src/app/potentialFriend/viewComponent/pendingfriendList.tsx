@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import FriendItem from './Friend';
+import PendingFriendItem from './pendingFriend';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { member } from '@/friend';
-import { getallFriend } from '../actions';
+import { getPendingFriend } from '../actions';
 
-export default function FriendsList() {
-  const [Friends, setFriends] = useState<member[] | null>(null);
+export default function PendingFriendsList() {
+  const [pendingFriends, setPendingFriends] = useState<member[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const loadFriends = async () => {
+  const loadPendingFriends = async () => {
     try {
-      const result = await getallFriend();
-      setFriends(result || []);
+      const result = await getPendingFriend();
+      setPendingFriends(result || []);
     } catch (err) {
       setError('Failed to load potential friends');
       console.error(err);
@@ -19,7 +19,7 @@ export default function FriendsList() {
   };
 
   useEffect(() => {
-    loadFriends();
+    loadPendingFriends();
   }, []);
 
   if (error) {
@@ -30,7 +30,7 @@ export default function FriendsList() {
     );
   }
 
-  if (Friends === null) {
+  if (pendingFriends === null) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
         <CircularProgress />
@@ -38,10 +38,10 @@ export default function FriendsList() {
     );
   }
   
-  if (Friends.length === 0) {
+  if (pendingFriends.length === 0) {
     return (
       <Typography sx={{ p: 2 }}>
-        No friends !
+        No pending friends !
       </Typography>
     );
   }
@@ -51,9 +51,9 @@ export default function FriendsList() {
       paddingBottom: '112px',
       marginTop: 0
     }}>
-      <Typography variant="h6"> Friends</Typography>
-      {Friends.map((friend) => (
-        < FriendItem key={friend.id} member={friend} friendUpdate={loadFriends} />
+      <Typography variant="h6">pending Friends</Typography>
+      {pendingFriends.map((friend) => (
+        < PendingFriendItem key={friend.id} member={friend} friendUpdate={loadPendingFriends} />
       ))}
     </Box>
   );
