@@ -108,6 +108,12 @@ VALUES (
   )
 );
 
+-- insert into member(data)
+-- VALUES('{
+-- 'email':'jackson@books.com',
+-- 'name':'jackson zheng',
+-- 'pwhash': '1234567'
+-- }')
 -- SELECT id, data FROM member WHERE id = '18fcf031-10cb-4a7f-8300-55f05e181c35';
 -- -- SELECT data->>'name' as name FROM member WHERE id = '61aade26-a032-4546-b6fa-ef52cb38f9c0';
 

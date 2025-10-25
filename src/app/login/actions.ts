@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers'
 
-import { Credentials, Authenticated } from '../../auth'
-import {authenticate} from '../../auth/service'
+import { Credentials, Authenticated, SignUpInfo} from '../../auth'
+import {authenticate, accountCreation} from '../../auth/service'
 import {encrypt} from '../../auth/jwtAuth'
 
 export async function login(credentials: Credentials) : Promise<Authenticated|undefined> {
@@ -23,6 +23,24 @@ export async function login(credentials: Credentials) : Promise<Authenticated|un
     return { name: user.name }
   }
   return undefined
+}
+
+export async function signUp(credentials: SignUpInfo) {
+  try {
+    const user = await accountCreation(credentials);
+    
+    if (!user) {
+      console.error('Sign up failed: No user returned');
+      return null;
+    }
+    
+    console.log('Sign up successful:', user);
+    return user;
+    
+  } catch (error: any) {
+    console.error('Sign up error:', error);
+    return null;
+  }
 }
 
 export async function logout() {

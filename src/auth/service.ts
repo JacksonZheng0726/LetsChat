@@ -1,6 +1,6 @@
 // import {SessionUser} from '../types'
 // import {Credentials, Authenticated} from './schema'
-import {Credentials, User} from './index'
+import {Credentials, User, SignUpInfo} from './index'
 
 import {dbServ} from './dbService'
 
@@ -11,6 +11,14 @@ export async function authenticate(credentials: Credentials): Promise<User|undef
   if (!memberUser || memberUser.data.deleted === 'true') {
     return;
   }
+  if (memberUser) {
+    return { id: memberUser.id, name: memberUser.name }
+  }
+}
+
+export async function accountCreation(credentials: SignUpInfo): Promise<User | undefined> {
+  const dbSer = new dbServ();
+  const memberUser = await dbSer.signUp(credentials.name,credentials.email, credentials.password);
   if (memberUser) {
     return { id: memberUser.id, name: memberUser.name }
   }

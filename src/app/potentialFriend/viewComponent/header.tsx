@@ -18,7 +18,7 @@ export default function PostHeader() {
           padding: '12px 16px',
         }}
       >
-        <Typography variant="h6">Add Friends</Typography>
+        <Typography variant="h6">Friends</Typography>
       </Box>
     </Box>
   );

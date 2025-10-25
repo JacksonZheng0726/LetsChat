@@ -21,10 +21,12 @@ import {
   Button, 
   TextField
 } from '@mui/material'
-import { login } from './actions'
+import { login, signUp } from './actions'
+// import { Gradient } from '@mui/icons-material'
 
 export default function LoginView() {
-  const [credentials, setCredentials] = useState({email: '', password: ''})
+  const [credentials, setCredentials] = useState({email: '', password: '', name: ''})
+  const [IssignUp, setsignUp] = useState(false)
   const router = useRouter()
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +34,15 @@ export default function LoginView() {
     const u = credentials
     if (name == 'email') {
       u.email = value
-    } else {
+    } else if (name == 'password') {
       u.password = value
+    } else {
+      u.name = value
     }
     setCredentials(u)
   }
 
-  const handleClick = async () => {
+  const handleLoginin = async () => {
     const authenticated = await login(credentials)
     console.log('[Login Result]', authenticated)
   
@@ -48,81 +52,140 @@ export default function LoginView() {
     } else {
       alert('Login failed!')
     }
+  }
+  const handleSignUp = async () => {
+    const createAccount = await signUp(credentials)
+    if (!createAccount) {
+      alert('signUp failed!')
+    } else {
+      alert('signUp Success!')
+    }
   }  
 
   return (
-    <Container
-      maxWidth="xs"
+    <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        minHeight:"100vh",
+        background: "linear-gradient(to bottom, #E6D5F5, mediumslateblue)",
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
       }}
     >
-      <Box
+      <Container
+        maxWidth="xs"
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          mt: 4,
+          backgroundColor:'whitesmoke',
+          borderRadius: 2,
+          padding:2
         }}
       >
-        <Typography variant="h5">
-          {'CSE187 Assignment 3'}
-        </Typography>
-        
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
+            // alignItems: 'center',
+            mt: 4,
           }}
         >
-          <TextField
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-        </Box>
-        
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
-          }}
-        >
-          <TextField
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-        </Box>
-        
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            mt: 5,
-          }}
-        >
-          <Button
-            variant="contained"
-            onClick={handleClick}
+          <Typography variant="h5">
+            {'Welcome to LetsChat'}
+          </Typography>
+          
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              mt: 5,
+              gap: 10
+            }}
           >
-            Sign in
-          </Button>
+            <Button
+              variant={!IssignUp ? "contained": "outlined"}
+              onClick={() => setsignUp(false)}
+              sx={{
+                backgroundColor: !IssignUp ? 'MediumPurple' : 'transparent', 
+                color: !IssignUp ? 'white' : 'MediumPurple',
+                borderColor: 'MediumPurple',
+              }}
+            >
+              Sign in
+            </Button>
+            <Button
+              variant={IssignUp ? "contained": "outlined"}
+              onClick={() => setsignUp(true)}
+              sx={{
+                backgroundColor: !IssignUp ? 'transparent': 'MediumPurple', 
+                color: !IssignUp ?  'MediumPurple': 'white',
+                borderColor: 'MediumPurple',
+              }}
+            >
+              Sign up
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              mt: 5,
+              gap: 4
+            }}
+          >
+          {IssignUp && (
+            <TextField
+              name="name"
+              type="userName"
+              placeholder="UserName"
+              onChange={handleInputChange}
+              fullWidth
+              required
+            />
+          )}
+            <TextField
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              onChange={handleInputChange}
+              fullWidth
+              required
+            />
+            <TextField
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={handleInputChange}
+              fullWidth
+              required
+            />
+          </Box>
+          
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              mt: 5,
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={IssignUp ? handleSignUp: handleLoginin}
+              // sx={{
+              //   backgroundColor: !IssignUp ? 'transparent': 'MediumPurple', 
+              //   color: !IssignUp ?  'MediumPurple': 'white',
+              //   borderColor: 'MediumPurple',
+              // }}
+            >
+              {IssignUp ? 'Sign Up' : 'Sign In'}
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   )
 }
