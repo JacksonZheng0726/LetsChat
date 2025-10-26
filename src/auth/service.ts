@@ -16,6 +16,14 @@ export async function authenticate(credentials: Credentials): Promise<User|undef
   }
 }
 
+export async function googleAuthenticate(email: string, name: string, googleID: string): Promise<User|undefined> {
+  const dbSer = new dbServ();
+  const memberUser = await dbSer.googleAuth(email, name, googleID);
+  if (memberUser) {
+    return { id: memberUser.id, name: memberUser.name, email: memberUser.email }
+  }
+}
+
 export async function accountCreation(credentials: SignUpInfo): Promise<User | undefined> {
   const dbSer = new dbServ();
   const memberUser = await dbSer.signUp(credentials.name,credentials.email, credentials.password);

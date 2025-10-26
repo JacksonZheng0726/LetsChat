@@ -10,6 +10,8 @@
 */
 
 // import { PostProvider } from './AppContext';
+import { GoogleOAuthProvider } from '@react-oauth/google'
+const ClientID = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID
 
 export const metadata = {
   title: 'CSE187 Assignment 3',
@@ -28,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          {children}
+          <GoogleOAuthProvider clientId={ClientID!}> 
+            {children}
+          </GoogleOAuthProvider>
       </body>
     </html>
   );

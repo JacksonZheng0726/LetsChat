@@ -7,6 +7,11 @@ export interface Credentials {
   password: string
 }
 
+export interface googleCredentials {
+  email: string,
+  name: string
+  googleID: string
+}
 
 export interface SignUpInfo {
   name: string,
@@ -17,8 +22,15 @@ export interface SignUpInfo {
 export interface User {
   id: string
   name: string
+  email?: string
 }
 
 export interface Authenticated {
   name: string
+}
+
+export interface GoogleAuthenticated {
+  email: string
+  name: string
+  id: string
 }

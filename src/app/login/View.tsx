@@ -21,7 +21,9 @@ import {
   Button, 
   TextField
 } from '@mui/material'
-import { login, signUp } from './actions'
+import { login, signUp, Googlelogin} from './actions'
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google'
+// import {jwtDecode} from 'jwt-decode'
 // import { Gradient } from '@mui/icons-material'
 
 export default function LoginView() {
@@ -60,7 +62,22 @@ export default function LoginView() {
     } else {
       alert('signUp Success!')
     }
-  }  
+  }
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+    // console.log('Google Login Success:', jwtDecode(credentialResponse.credential!))
+    if (!credentialResponse.credential) {
+      return null
+    }
+    const result = await Googlelogin(credentialResponse.credential)
+    if (result) {
+      window.sessionStorage.setItem('name', result.name)
+      window.sessionStorage.setItem('email', result.email)
+      router.push('/')
+    } else {
+      alert('google login failed!')
+    }
+  }
+
 
   return (
     <Box
@@ -94,7 +111,13 @@ export default function LoginView() {
           <Typography variant="h5">
             {'Welcome to LetsChat'}
           </Typography>
-          
+          <>
+            <GoogleLogin 
+            onSuccess={handleGoogleSuccess}
+            useOneTap={false} 
+            auto_select={false}
+            />
+          </>
           <Box
             sx={{
               display: 'flex',
@@ -107,6 +130,7 @@ export default function LoginView() {
             <Button
               variant={!IssignUp ? "contained": "outlined"}
               onClick={() => setsignUp(false)}
+              aria-label="sign in Switcher"
               sx={{
                 backgroundColor: !IssignUp ? 'MediumPurple' : 'transparent', 
                 color: !IssignUp ? 'white' : 'MediumPurple',
@@ -118,6 +142,7 @@ export default function LoginView() {
             <Button
               variant={IssignUp ? "contained": "outlined"}
               onClick={() => setsignUp(true)}
+               aria-label="sign up Switcher"
               sx={{
                 backgroundColor: !IssignUp ? 'transparent': 'MediumPurple', 
                 color: !IssignUp ?  'MediumPurple': 'white',
@@ -175,6 +200,7 @@ export default function LoginView() {
             <Button
               variant="contained"
               onClick={IssignUp ? handleSignUp: handleLoginin}
+              aria-label= {IssignUp? "sign up button": "sign in button"}
               // sx={{
               //   backgroundColor: !IssignUp ? 'transparent': 'MediumPurple', 
               //   color: !IssignUp ?  'MediumPurple': 'white',

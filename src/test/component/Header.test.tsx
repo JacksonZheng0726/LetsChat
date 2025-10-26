@@ -13,6 +13,6 @@ it('post header test', () => {
 
 it('potential friend header test', () => {
   render(<PfriendHeader />);
-  const headerText = screen.getByText('Add Friends');
+  const headerText = screen.getByText('Friends');
   expect(headerText).toBeDefined();
 });

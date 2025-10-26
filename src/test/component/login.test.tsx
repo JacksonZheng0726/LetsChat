@@ -7,9 +7,14 @@ import LoginView from '../../app/login/View';
 import LoginPage from '../../app/login/page';
 import * as nav from 'next/navigation';
 
+vi.mock('@react-oauth/google', () => ({
+  GoogleOAuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  GoogleLogin: () => <div>Google Login Mock</div>,
+}));
 
 vi.mock('../../app/login/actions', () => ({
-  login: vi.fn(() => Promise.resolve({name:'jack'}))
+  login: vi.fn(() => Promise.resolve({name:'jack'})),
+  Googlelogin: vi.fn(),
 }));
 
 vi.mock('next/navigation', () => ({
@@ -43,7 +48,7 @@ afterEach(() => {
 
 it('Login page render works', () => {
   render(<LoginView />);
-  expect(screen.getByText('CSE187 Assignment 3')).toBeDefined();
+  expect(screen.getByText('Welcome to LetsChat')).toBeDefined();
 });
 
 it('input email and passwod for valid login', async () => {
@@ -52,7 +57,7 @@ it('input email and passwod for valid login', async () => {
   const passwordInput = screen.getByPlaceholderText('Password');
   await userEvent.type(emailInput, 'jack@gmail.com');
   await userEvent.type(passwordInput, '2ifjw93784983');
-  await userEvent.click(screen.getByText('Sign in'));
+  await userEvent.click(screen.getByLabelText('sign in button'));
   await waitFor(() => {
     expect(returnValue).toHaveBeenCalledWith('name','jack');
   });
@@ -60,5 +65,5 @@ it('input email and passwod for valid login', async () => {
 
 it('loginView component run inside the loginPage', () => {
   render(<LoginPage />);
-  expect(screen.getByText('CSE187 Assignment 3')).toBeDefined();
+  expect(screen.getByText('Welcome to LetsChat')).toBeDefined();
 });

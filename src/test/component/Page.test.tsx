@@ -43,6 +43,6 @@ it('the postview works inside the provider', async () => {
 
 it('the potential friend page works inside the provider', async () => {
   render(<PfriendPage />)
-  expect(screen.getByText('Add Friends')).toBeDefined()
+  expect(screen.getByText('Friends')).toBeDefined()
 })
 

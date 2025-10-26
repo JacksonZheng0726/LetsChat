@@ -11,6 +11,7 @@ import PendingFriendList from './viewComponent/pendingfriendList';
 import FriendLists from './viewComponent/friendList';
 
 
+
 export default function MemberView() {
   // const {inputPost} = usePostContext();
 
