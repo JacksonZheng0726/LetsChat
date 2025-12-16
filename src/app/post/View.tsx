@@ -30,7 +30,7 @@ export default function PostsView() {
 
   const handleCreate = async (content: string, image: string) => {
     try {
-      await createPost({ content, image });
+      await createPost({content, image});
       const updatedPosts = await getPost(1);
       setPosts(updatedPosts);
     } catch (err) {
@@ -54,7 +54,7 @@ export default function PostsView() {
         mx: 'auto',
         backgroundColor: 'white',
         minHeight: '100vh',
-      }}////
+      }}
     >
       <PostHeader />
       <PostsList posts={posts} />

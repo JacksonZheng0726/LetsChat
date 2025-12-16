@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { Box, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Box, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
+import EmojiPicker from "emoji-picker-react";
 
 interface InputCreate {
   input: (content: string, image: string) => void;
@@ -14,6 +15,7 @@ export default function PostCreate({input}: InputCreate) {
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
   const [dialog, setDialog] = useState(false);
+  const [emojiAnchor, setEmojiAnchor] = useState<HTMLButtonElement | null>(null);
 
   const imageClick = () => {
     setDialog(true);
@@ -30,7 +32,6 @@ export default function PostCreate({input}: InputCreate) {
         alert('Please select an image file');
         return;
       }
-
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
@@ -53,6 +54,21 @@ export default function PostCreate({input}: InputCreate) {
     }
   };
 
+
+  const handleEmojiClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setEmojiAnchor(event.currentTarget);
+  };
+
+  const handleEmojiClose = () => {
+    setEmojiAnchor(null);
+  };
+
+  const onEmojiClick = (emojiData: any) => {
+    setContent(prev => prev + emojiData.emoji);
+  };
+
+  const emojiOpen = Boolean(emojiAnchor);
+
   return (
     <>
       <Box
@@ -68,7 +84,8 @@ export default function PostCreate({input}: InputCreate) {
           backgroundColor: 'white',
           zIndex: 10,
         }}
-      >{/* Image previous */}
+      >
+        {/* Image Preview */}
         {image && (
           <Box
             sx={{
@@ -146,8 +163,9 @@ export default function PostCreate({input}: InputCreate) {
           <IconButton 
             aria-label="emoButton"
             size="small"
+            onClick={handleEmojiClick}
           >
-            <EmojiEmotionsIcon fontSize="small" />
+            <EmojiEmotionsIcon fontSize="small" color={emojiOpen ? "primary" : "inherit"} />
           </IconButton>
           
           <IconButton
@@ -161,6 +179,7 @@ export default function PostCreate({input}: InputCreate) {
         </Box>
       </Box>
 
+      {/* Image Upload Dialog */}
       <Dialog open={dialog} onClose={dialogCloseClick} maxWidth="sm" fullWidth>
         <DialogTitle>Upload Image</DialogTitle>
         <DialogContent>
@@ -173,13 +192,12 @@ export default function PostCreate({input}: InputCreate) {
               onChange={handleFileUpload}
             />
             <label htmlFor="raised-button-file">
-              {/* Because the button normally not allow to render inside the label */}
               <Button variant="contained" component="span" startIcon={<ImageIcon />}>
                 Choose Image from Device
               </Button>
             </label>
             <Box sx={{ mt: 2, color: 'text.secondary', fontSize: '0.875rem' }}>
-              Supports: JPG, PNG, GIF
+              Supports: JPG, PNG, GIF, WebP
             </Box>
           </Box>
         </DialogContent>
@@ -187,6 +205,26 @@ export default function PostCreate({input}: InputCreate) {
           <Button onClick={dialogCloseClick}>Cancel</Button>
         </DialogActions>
       </Dialog>
+
+      <Popover
+        open={emojiOpen}
+        anchorEl={emojiAnchor}
+        onClose={handleEmojiClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+      <EmojiPicker 
+        onEmojiClick={onEmojiClick}
+        width={320}
+        height={400}
+      />
+      </Popover>
     </>
   );
 }
