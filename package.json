@@ -16,10 +16,10 @@
     "google-auth-library": "^10.4.2",
     "jose": "*",
     "jwt-decode": "^4.0.0",
-    "next": "*",
+    "next": "^16.0.10",
     "pg": "*",
-    "react": "*",
-    "react-dom": "*",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "server-only": "*"
   },
   "devDependencies": {
@@ -44,7 +44,6 @@
   },
   "scripts": {
     "lint": "next lint",
-    "predev": "next lint",
     "dev": "next dev",
     "prebuild": "next lint",
     "build": "next build",

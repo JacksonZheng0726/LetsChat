@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useState } from 'react';
 import { Box, TextField, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Popover } from '@mui/material';

@@ -1,4 +1,6 @@
 // src/app/post/components/PostItem.tsx
+'use client';
+
 import React from 'react';
 import { Box, Typography, Avatar } from '@mui/material';
 import type { Post } from '../../../post';

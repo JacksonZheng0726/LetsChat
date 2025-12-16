@@ -1,4 +1,5 @@
-import React from 'react';
+// import React from 'react';
+'use client';
 import { Box, Typography } from '@mui/material';
 
 export default function PostHeader() {
