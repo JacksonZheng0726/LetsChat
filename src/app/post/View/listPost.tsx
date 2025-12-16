@@ -1,15 +1,16 @@
 'use client';
 
-import React from 'react';
+// import React from 'react';
 import PostItem from './singlePost';
 import { Box, Typography } from '@mui/material';
 import { Post } from '@/post';
 
 interface PostsListProps {
   posts: Post[];
+  onRefresh?: () => void;
 }
 
-export default function PostsList({ posts }: PostsListProps) {
+export default function PostsList({ posts, onRefresh }: PostsListProps) {
   if (posts.length === 0) {
     return (
       <Typography sx={{p: 2}}>
@@ -24,7 +25,7 @@ export default function PostsList({ posts }: PostsListProps) {
       marginTop: 0
     }}>
       {posts.map((post) => (
-        <PostItem key={post.id} post={post} />
+        <PostItem key={post.id} post={post} onAvatarChange={onRefresh} />
       ))}
     </Box>
   );

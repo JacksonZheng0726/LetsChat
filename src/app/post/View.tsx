@@ -13,18 +13,17 @@ export default function PostsView() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchPosts = async () => {
+    try {
+      const result = await getPost(1);
+      console.log('Fetched posts:', result);
+      setPosts(result || []);
+    } catch (err) {
+      console.error('Failed to fetch posts:', err);
+      setError('Failed to load posts');
+    }
+  };
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const result = await getPost(1);
-        console.log('Fetched posts:', result);
-        setPosts(result || []);
-      } catch (err) {
-        console.error('Failed to fetch posts:', err);
-        setError('Failed to load posts');
-        console.error(err);
-      }
-    };
     fetchPosts();
   }, []);
 
@@ -57,7 +56,10 @@ export default function PostsView() {
       }}
     >
       <PostHeader />
-      <PostsList posts={posts} />
+      <PostsList 
+        posts={posts}
+        onRefresh={fetchPosts}
+      />
       <CreatePostInput input={handleCreate} />
       <Navigation />
     </Box>

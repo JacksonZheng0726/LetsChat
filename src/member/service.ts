@@ -8,6 +8,11 @@ export class potentialFriend {
     const potentialFriend = await new dbServ().getPotentialFriend(memberID);
     return potentialFriend
   }
+  
+  public async updateAvatarAction(memberId: string, avatarBase64: string) {
+    await new dbServ().updateAvatar(memberId, avatarBase64);
+  }
+
   public async friendRequestCreation(idRequestMem: string, idReceiveMem: string): Promise<member|undefined> {
     await new authDB().getmemberID(idReceiveMem);
     // if (deletedMember.data.deleted === 'true') {

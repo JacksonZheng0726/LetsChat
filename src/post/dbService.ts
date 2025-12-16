@@ -32,6 +32,7 @@ export class dbServ {
       SELECT 
         P.id,
         M.data->>'name' as member,
+        M.data->>'avatar' as avatar,
         P.data->>'posted' as posted,
         P.data->>'content' as content,
         P.data->>'image' as image
@@ -43,6 +44,7 @@ export class dbServ {
       LIMIT $2
       OFFSET $3
     `;
+
     
     const query = {
       text: select,
@@ -54,6 +56,7 @@ export class dbServ {
     return result.rows.map(row => ({
       id: row.id,
       member: row.member,
+      avatarUrl: row.avatar,
       posted: row.posted,
       content: row.content,
       image: row.image

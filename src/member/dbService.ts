@@ -73,4 +73,14 @@ export class dbServ {
     const member = await new authDB().getmemberID(idReceiveMem)
     return {id: member.id, name: member.data.name}
   }
+  public async updateAvatar(memberId: string, avatarBase64: string) {
+    const select = `
+      UPDATE member
+      SET data = jsonb_set(data, '{avatar}', to_jsonb($1::text), true)
+      WHERE id = $2::uuid
+      RETURNING data->>'avatar' as avatar
+    `;
+    const result = await pool.query(select, [avatarBase64, memberId]);
+    return result.rows[0];
+  }
 }
