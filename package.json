@@ -46,10 +46,7 @@
     "build": "next build",
     "lint": "next lint .",
     "dev": "next dev",
-    "prebuild": "next lint .",
-    "prestart": "npm run build",
     "start": "next start",
-    "pretest": "next lint",
     "test": "vitest run --no-file-parallelism --testTimeout=3000 --coverage",
     "zip": "bestzip CSE187.Assignment3.Submission.zip test/**/* src/**/* sql/schema.sql sql/data.sql"
   }
